@@ -37,7 +37,13 @@
   form {
     margin-bottom: 20px;
   }
-  input[type="text"], input[type="number"], input[type="submit"] {
+  input[type="text"], input[type="number"], input[type="date"], input[type="submit"] {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    box-sizing: border-box;
+  }
+  select[type="text"], input[type="number"], input[type="date"], input[type="submit"] {
     width: 100%;
     padding: 8px;
     margin: 5px 0;
@@ -65,13 +71,41 @@
 <div class="container">
   <h1>Panel de Administrador</h1>
   <h2>Registrar Empleado</h2>
-  <form id="employeeForm">
-    <input type="text" name="nombre" placeholder="Nombre del empleado">
-    <input type="text" name="turno" placeholder="Turno del empleado">
-    <input type="number" name="porcentajeEmpleado" placeholder="Porcentaje de Ganancia del Empleado (%)" min="0" max="100">
-    <input type="number" name="porcentajePeluqueria" placeholder="Porcentaje de Ganancia de la Peluquería (%)" min="0" max="100">
-    <input type="number" name="precioTurno" placeholder="Precio del Turno">
-    <input type="submit" value="Registrar">
+    <form id="employeeForm">
+      <input type="number" name="codigo_de_ticket" placeholder="Codigo de ticket" min="0" max="9000">
+      <select name="nombre" type="text">
+        <option value="Fanny Rativa">Fanny Rativa</option>
+        <option value="Diana">Diana</option>
+        <option value="Alejandra Medina">Alejandra Medina</option>
+        <option value="Emilce">Emilce</option>
+        <option value="Jorgelis">Jorgelis</option>
+        <option value="Vanesa">Vanesa</option>
+        <option value="Edgar">Edgar</option>
+        <option value="Camila">Camila</option>
+        <option value="Alejandra Juiza">Alejandra Juiza</option>
+      </select>
+      <select name="turno" type="text">
+        <option value="CORTE">CORTE</option>
+        <option value="TINTE">TINTE</option>
+        <option value="CEPILLADO">CEPILLADO</option>
+        <option value="MAN. CONVENCIONAL">MAN. CONVENCIONAL</option>
+        <option value="PED. CONVENCIONAL">PED. CONVENCIONAL</option>
+        <option value="ACRILICO">ACRILICO</option>
+        <option value="SEMIPERMANENTE">SEMIPERMANENTE</option>
+        <option value="CERA">CERA</option>
+      </select>
+      <select name="porcentajeEmpleado" type="text">
+        <option value="50">50%</option>
+        <option value="55">55%</option>
+        <option value="60">60%</option>
+        <option value="70">70%</option>
+        <option value="100">100%</option>
+      </select>
+      
+      <input type="number" name="precioTurno" placeholder="Precio del Turno">
+      
+      <input type="submit" value="Registrar">
+   
   </form>
   <h2>Turnos Registrados</h2>
   <table id="turnsTable">
@@ -80,9 +114,10 @@
         <th>Empleado</th>
         <th>Turno</th>
         <th>Porcentaje Empleado (%)</th>
-        <th>Porcentaje Peluquería (%)</th>
+        <th>Codigo</th>
         <th>Precio del Turno</th>
         <th>Ganancia del Empleado</th>
+        <th>Fecha</th>
       </tr>
     </thead>
     <tbody id="turnsTableBody">
@@ -97,18 +132,20 @@
     var nombre = this.elements["nombre"].value;
     var turno = this.elements["turno"].value;
     var porcentajeEmpleado = parseFloat(this.elements["porcentajeEmpleado"].value);
-    var porcentajePeluqueria = parseFloat(this.elements["porcentajePeluqueria"].value);
+    var codigo_de_ticket = parseFloat(this.elements["codigo_de_ticket"].value);
     var precioTurno = parseFloat(this.elements["precioTurno"].value);
+    var fecha = new Date().toISOString().split('T')[0]; // Obtener la fecha actual en formato yyyy-mm-dd
 
-    if (nombre.trim() !== "" && turno.trim() !== "" && !isNaN(porcentajeEmpleado) && !isNaN(porcentajePeluqueria) && !isNaN(precioTurno)) {
-      registrarEmpleado(nombre, turno, porcentajeEmpleado, porcentajePeluqueria, precioTurno);
+    if (nombre.trim() !== "" && turno.trim() !== "" && !isNaN(porcentajeEmpleado) && !isNaN(codigo_de_ticket) && !isNaN(precioTurno)) {
+      registrarEmpleado(nombre, turno, porcentajeEmpleado, codigo_de_ticket, precioTurno, fecha);
+      document.getElementById("fecha").value = fecha; // Mostrar la fecha actual en el campo de fecha
       this.reset(); // Limpia el formulario
     } else {
       alert("Por favor, complete todos los campos correctamente.");
     }
   });
 
-  function registrarEmpleado(nombre, turno, porcentajeEmpleado, porcentajePeluqueria, precioTurno) {
+  function registrarEmpleado(nombre, turno, porcentajeEmpleado, codigo_de_ticket, precioTurno, fecha) {
     var tableBody = document.getElementById("turnsTableBody");
     var newRow = tableBody.insertRow();
     var cell1 = newRow.insertCell(0);
@@ -117,14 +154,17 @@
     var cell4 = newRow.insertCell(3);
     var cell5 = newRow.insertCell(4);
     var cell6 = newRow.insertCell(5);
+    var cell7 = newRow.insertCell(6);
     cell1.textContent = nombre;
     cell2.textContent = turno;
     cell3.textContent = porcentajeEmpleado + "%";
-    cell4.textContent = porcentajePeluqueria + "%";
-    cell5.textContent = precioTurno + " USD";
+    cell4.textContent = codigo_de_ticket ;
+    cell5.textContent = precioTurno + " $";
 
     var gananciaEmpleado = (porcentajeEmpleado / 100) * precioTurno;
-    cell6.textContent = gananciaEmpleado.toFixed(2) + " USD";
+    cell6.textContent = gananciaEmpleado.toFixed(2) + " $";
+
+    cell7.textContent = fecha; // Mostrar la fecha en la última columna
   }
 </script>
 
