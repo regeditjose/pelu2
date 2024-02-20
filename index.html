@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel de Administrador</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  h1, h2 {
+    text-align: center;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  th, td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+  }
+  th {
+    background-color: #f2f2f2;
+  }
+  form {
+    margin-bottom: 20px;
+  }
+  input[type="text"], input[type="number"], input[type="submit"] {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    box-sizing: border-box;
+  }
+  input[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  input[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Panel de Administrador</h1>
+  <h2>Registrar Empleado</h2>
+  <form id="employeeForm">
+    <input type="text" name="nombre" placeholder="Nombre del empleado">
+    <input type="text" name="turno" placeholder="Turno del empleado">
+    <input type="number" name="porcentajeEmpleado" placeholder="Porcentaje de Ganancia del Empleado (%)" min="0" max="100">
+    <input type="number" name="porcentajePeluqueria" placeholder="Porcentaje de Ganancia de la Peluquería (%)" min="0" max="100">
+    <input type="number" name="precioTurno" placeholder="Precio del Turno">
+    <input type="submit" value="Registrar">
+  </form>
+  <h2>Turnos Registrados</h2>
+  <table id="turnsTable">
+    <thead>
+      <tr>
+        <th>Empleado</th>
+        <th>Turno</th>
+        <th>Porcentaje Empleado (%)</th>
+        <th>Porcentaje Peluquería (%)</th>
+        <th>Precio del Turno</th>
+        <th>Ganancia del Empleado</th>
+      </tr>
+    </thead>
+    <tbody id="turnsTableBody">
+      <!-- Aquí se generarán dinámicamente las filas de la tabla -->
+    </tbody>
+  </table>
+</div>
+
+<script>
+  document.getElementById("employeeForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Evita que se recargue la página al enviar el formulario
+    var nombre = this.elements["nombre"].value;
+    var turno = this.elements["turno"].value;
+    var porcentajeEmpleado = parseFloat(this.elements["porcentajeEmpleado"].value);
+    var porcentajePeluqueria = parseFloat(this.elements["porcentajePeluqueria"].value);
+    var precioTurno = parseFloat(this.elements["precioTurno"].value);
+
+    if (nombre.trim() !== "" && turno.trim() !== "" && !isNaN(porcentajeEmpleado) && !isNaN(porcentajePeluqueria) && !isNaN(precioTurno)) {
+      registrarEmpleado(nombre, turno, porcentajeEmpleado, porcentajePeluqueria, precioTurno);
+      this.reset(); // Limpia el formulario
+    } else {
+      alert("Por favor, complete todos los campos correctamente.");
+    }
+  });
+
+  function registrarEmpleado(nombre, turno, porcentajeEmpleado, porcentajePeluqueria, precioTurno) {
+    var tableBody = document.getElementById("turnsTableBody");
+    var newRow = tableBody.insertRow();
+    var cell1 = newRow.insertCell(0);
+    var cell2 = newRow.insertCell(1);
+    var cell3 = newRow.insertCell(2);
+    var cell4 = newRow.insertCell(3);
+    var cell5 = newRow.insertCell(4);
+    var cell6 = newRow.insertCell(5);
+    cell1.textContent = nombre;
+    cell2.textContent = turno;
+    cell3.textContent = porcentajeEmpleado + "%";
+    cell4.textContent = porcentajePeluqueria + "%";
+    cell5.textContent = precioTurno + " USD";
+
+    var gananciaEmpleado = (porcentajeEmpleado / 100) * precioTurno;
+    cell6.textContent = gananciaEmpleado.toFixed(2) + " USD";
+  }
+</script>
+
+</body>
+</html>
