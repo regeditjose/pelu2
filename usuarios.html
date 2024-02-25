@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Usuarios</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  h1, h2 {
+    text-align: center;
+  }
+  form {
+    margin-bottom: 20px;
+  }
+  input[type="date"], input[type="submit"], select {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    box-sizing: border-box;
+  }
+  input[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  input[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  th {
+    background-color: #f2f2f2;
+  }
+  .sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+  }
+  .sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+  }
+  .sidenav a:hover {
+    color: #f1f1f1;
+  }
+  .sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+  }
+  @media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+  }
+</style>
+</head>
+<body>
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="inicio.html">Inicio</a>
+  <a href="index.html">Administración</a>
+  <a href="usuarios.html">Usuarios</a>
+  <a href="vales.html">Vales</a>
+</div>
+
+<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menú</span>
+
+<div class="container">
+  <h1>Revisión de Ganancias por Rango de Fechas</h1>
+  <form id="userGainsForm">
+    <label for="user">Usuario:</label>
+    <select id="user" name="user" required>
+      <!-- Aquí se llenarán los usuarios desde el formulario anterior -->
+    </select>
+    <label for="startDate">Fecha de inicio:</label>
+    <input type="date" id="startDate" name="startDate" required>
+    <label for="endDate">Fecha de fin:</label>
+    <input type="date" id="endDate" name="endDate" required>
+    <input type="submit" value="Consultar Ganancias">
+  </form>
+  <h2>Ganancias del Usuario</h2>
+  <div id="userGainsInfo">
+    <!-- Aquí se mostrarán las ganancias del usuario -->
+  </div>
+</div>
+
+<script>
+  // Llenar el select con los usuarios disponibles del formulario anterior
+  var usersSelect = document.getElementById("user");
+  var users = ["Fanny Rativa", "Diana", "Alejandra Medina", "Emilce", "Jorgelis", "Vanesa", "Edgar", "Camila", "Alejandra Juiza"]; // Debes reemplazar esto con la lógica para obtener los usuarios disponibles
+  users.forEach(function(user) {
+    var option = document.createElement("option");
+    option.value = user;
+    option.textContent = user;
+    usersSelect.appendChild(option);
+  });
+
+  document.getElementById("userGainsForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Evita que se recargue la página al enviar el formulario
+    var user = this.elements["user"].value;
+    var startDate = this.elements["startDate"].value;
+    var endDate = this.elements["endDate"].value;
+
+    // Aquí podrías enviar user, startDate y endDate al servidor para obtener las ganancias del usuario para ese rango de fechas
+    // Podrías usar AJAX o Fetch para enviar una solicitud al servidor y recibir los datos
+
+    // Ejemplo de cómo podrías mostrar las ganancias del usuario
+    var userGainsInfo = document.getElementById("userGainsInfo");
+    userGainsInfo.innerHTML = "<p>Ganancias de " + user + " para el rango de fechas " + startDate + " - " + endDate + ": $1500</p>"; // Esto es solo un ejemplo, debes reemplazarlo con los datos reales
+
+    // Ejemplo de datos de ganancias de empleados
+    var employeeGainsData = [
+      { ticketNumber: "123456", gainDate: "2024-02-24", employeeGain: 1500 },
+      { ticketNumber: "789012", gainDate: "2024-02-25", employeeGain: 1800 },
+      { ticketNumber: "345678", gainDate: "2024-02-26", employeeGain: 2000 }
+    ];
+
+    // Crear la tabla con el número de ticket, fecha y ganancia del empleado
+    var table = "<h2>Información del Empleado</h2>";
+    table += "<table>";
+    table += "<tr><th>Número de Ticket</th><th>Fecha</th><th>Ganancia del Empleado</th></tr>";
+    var totalGain = 0; // Variable para almacenar la suma total de ganancias
+    employeeGainsData.forEach(function(data) {
+      table += "<tr><td>" + data.ticketNumber + "</td><td>" + data.gainDate + "</td><td>" + data.employeeGain + "</td></tr>";
+      totalGain += data.employeeGain; // Sumar la ganancia del empleado al total
+    });
+    table += "<tr><td colspan='2'>Total</td><td>" + totalGain + "</td></tr>"; // Mostrar el total al final de la tabla
+    table += "</table>";
+    userGainsInfo.innerHTML += table;
+  });
+
+  function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+  }
+
+  function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+  }
+</script>
+
+</body>
+</html>
+
+

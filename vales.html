@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vales</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  h1, h2 {
+    text-align: center;
+  }
+  form {
+    margin-bottom: 20px;
+  }
+  input[type="date"], input[type="number"], input[type="submit"], select {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    box-sizing: border-box;
+  }
+  input[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  input[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  th, td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+  }
+  .sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+  }
+  .sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+  }
+  .sidenav a:hover {
+    color: #f1f1f1;
+  }
+  .sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+  }
+  @media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+  }
+</style>
+</head>
+<body>
+  <div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="inicio.html">Inicio</a>
+    <a href="index.html">Administración</a>
+    <a href="usuarios.html">Usuarios</a>
+    <a href="vales.html">Vales</a>
+  </div>
+
+<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menú</span>
+
+<div class="container">
+  <h1>Registro de Vales</h1>
+  <form id="voucherForm">
+    <label for="user">Usuario:</label>
+    <select id="user" name="user" required>
+      <!-- Aquí se llenarán los usuarios desde el formulario anterior -->
+    </select>
+    <label for="date">Fecha:</label>
+    <input type="date" id="date" name="date" required>
+    <label for="amount">Valor del Vale:</label>
+    <input type="number" id="amount" name="amount" min="0" required>
+    <input type="submit" value="Registrar Vale">
+  </form>
+  <h2>Vales Registrados</h2>
+  <table id="vouchersTable">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Fecha</th>
+        <th>Valor</th>
+      </tr>
+    </thead>
+    <tbody id="vouchersTableBody">
+      <!-- Aquí se llenarán dinámicamente los vales registrados -->
+    </tbody>
+  </table>
+</div>
+
+<script>
+  // Llenar el select con los usuarios disponibles del formulario anterior
+  var usersSelect = document.getElementById("user");
+  var users = ["Fanny Rativa", "Diana", "Alejandra Medina", "Emilce", "Jorgelis", "Vanesa", "Edgar", "Camila", "Alejandra Juiza"]; // Debes reemplazar esto con la lógica para obtener los usuarios disponibles
+  users.forEach(function(user) {
+    var option = document.createElement("option");
+    option.value = user;
+    option.textContent = user;
+    usersSelect.appendChild(option);
+  });
+
+  document.getElementById("voucherForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Evita que se recargue la página al enviar el formulario
+    var user = this.elements["user"].value;
+    var date = this.elements["date"].value;
+    var amount = this.elements["amount"].value;
+
+    // Simulación de proceso de registro del vale
+    // Aquí puedes enviar user, date y amount al servidor para registrar el vale
+    // Por ahora, solo mostraremos un nuevo registro en la tabla
+    addVoucherToTable(user, date, amount);
+    this.reset(); // Limpiar el formulario después del envío
+  });
+
+  function addVoucherToTable(user, date, amount) {
+    var tableBody = document.getElementById("vouchersTableBody");
+    var newRow = tableBody.insertRow();
+    var cell1 = newRow.insertCell(0);
+    var cell2 = newRow.insertCell(1);
+    var cell3 = newRow.insertCell(2);
+    cell1.textContent = user;
+    cell2.textContent = date;
+    cell3.textContent = amount + " $";
+  }
+
+  function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+  }
+
+  function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+  }
+</script>
+
+</body>
+</html>
+
+

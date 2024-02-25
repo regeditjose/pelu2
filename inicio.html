@@ -116,54 +116,30 @@
 <div class="container">
   
     <div class="logo">
-      <img src="logotizos.png" class="logo">
+      <img src="/imgs/logotizos.png" class="logo">
     </div>
   <h1>Panel de Administrador</h1>
   
-    <form id="employeeForm">
-      <input type="number" name="codigo_de_ticket" placeholder="Codigo de ticket" min="0" max="9000">
-      <select name="nombre" type="text">
-        <option value="Fanny Rativa">Fanny Rativa</option>
-        <option value="Diana">Diana</option>
-        <option value="Alejandra Medina">Alejandra Medina</option>
-        <option value="Emilce">Emilce</option>
-        <option value="Jorgelis">Jorgelis</option>
-        <option value="Vanesa">Vanesa</option>
-        <option value="Edgar">Edgar</option>
-        <option value="Camila">Camila</option>
-        <option value="Alejandra Juiza">Alejandra Juiza</option>
-      </select>
-      <select name="turno" type="text">
-        <option value="CORTE">CORTE</option>
-        <option value="TINTE">TINTE</option>
-        <option value="CEPILLADO">CEPILLADO</option>
-        <option value="MAN. CONVENCIONAL">MAN. CONVENCIONAL</option>
-        <option value="PED. CONVENCIONAL">PED. CONVENCIONAL</option>
-        <option value="ACRILICO">ACRILICO</option>
-        <option value="SEMIPERMANENTE">SEMIPERMANENTE</option>
-        <option value="CERA">CERA</option>
-      </select>
-      <select name="porcentajeEmpleado" type="text">
-        <option value="50">50%</option>
-        <option value="55">55%</option>
-        <option value="60">60%</option>
-        <option value="70">70%</option>
-        <option value="100">100%</option>
-      </select>
-      
-      <input type="number" name="precioTurno" placeholder="Precio del Turno">
-      
-      <!-- Nuevo campo select para el método de pago -->
-      <select name="metodoPago" type="text">
-        <option value="Efectivo">Efectivo</option>
-        <option value="Nequi">Nequi</option>
-        <option value="DaviPlata">DaviPlata</option>
-        <option value="Tarjeta">Tarjeta</option>
-      </select>
-      
-      <input type="submit" value="Registrar">
-   
+  <!-- Formulario para filtrar por rango de fechas y método de pago -->
+  <form id="filterForm">
+    <label for="startDate">Fecha de inicio:</label>
+    <input type="date" id="startDate" name="startDate">
+    <label for="endDate">Fecha de fin:</label>
+    <input type="date" id="endDate" name="endDate">
+
+    <label for="paymentMethod">Método de pago:</label>
+    <select name="paymentMethod" id="paymentMethod">
+      <option value="">Seleccione...</option>
+      <option value="Efectivo">Efectivo</option>
+      <option value="Nequi">Nequi</option>
+      <option value="DaviPlata">DaviPlata</option>
+      <option value="Tarjeta">Tarjeta</option>
+    </select>
+
+    <input type="submit" value="Filtrar">
   </form>
+  
+  <!-- Tabla de turnos registrados -->
   <h2>Turnos Registrados</h2>
   <table id="turnsTable">
     <thead>
